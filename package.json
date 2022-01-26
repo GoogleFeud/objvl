@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest",
     "build": "tsc",
+    "bench": "tsc && node benchmarks/index.js",
     "run": "tsc && jest"
   },
   "repository": {

@@ -22,5 +22,5 @@
       "name": "objvl",
       "changelog": true
     },
-    "exclude": ["./node_modules", "./test", "./dist"]
+    "exclude": ["./node_modules", "./test", "./dist", "./benchmarks"]
   }
