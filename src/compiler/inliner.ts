@@ -37,7 +37,7 @@ export function inlineFunc(fn: string|Function, replacements: Array<string>) : s
         if (isPrevArrow && char === "{") return `(${fn})(${replacements.join(",")})`;
 
         // Toggle string mode
-        if (char === "\"") inStr = !inStr;
+        if (char === "\"" || char === "'" || char === "`") inStr = !inStr;
 
         // If the current character is valid in an identifier, add it to the current identifier
         if (/[a-zA-Z0-9_]/.test(char) && !inStr) {
