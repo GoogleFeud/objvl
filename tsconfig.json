@@ -11,15 +11,11 @@
       "noImplicitAny": true,                       
       "strictFunctionTypes": true,                 
       "alwaysStrict": true,                        
-  
       "noImplicitReturns": true,            
       "noFallthroughCasesInSwitch": true,      
-  
       "esModuleInterop": true,                    
-  
       "skipLibCheck": true,                     
-      "forceConsistentCasingInFileNames": true,
-      "newLine": "lf"
+      "forceConsistentCasingInFileNames": true
     },
     "tsdocsOptions": {
       "entryPoints": ["./src/index.ts"],

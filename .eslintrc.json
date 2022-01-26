@@ -1,6 +1,5 @@
 {
     "env": {
-        "browser": true,
         "es2021": true,
         "node": true
     },
@@ -17,7 +16,6 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react",
         "@typescript-eslint"
     ],
     "rules": {
