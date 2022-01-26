@@ -4,8 +4,9 @@
   "description": "A fast object validator",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "test": "jest",
+    "build": "tsc",
+    "run": "tsc && jest"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
   },
   "homepage": "https://github.com/GoogleFeud/objvl#readme",
   "devDependencies": {
+    "@types/jest": "^27.4.0",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",
     "eslint": "^8.7.0",
