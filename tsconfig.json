@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+      "target": "ESNEXT",                               
+      "rootDir": "./src",
+      "outDir": "./dist",
+      "module": "commonjs",
+      "removeComments": true,
+      "downlevelIteration": true,     
+      "declaration": true,         
+      "strict": true,                             
+      "noImplicitAny": true,                       
+      "strictFunctionTypes": true,                 
+      "alwaysStrict": true,                        
+  
+      "noImplicitReturns": true,            
+      "noFallthroughCasesInSwitch": true,      
+  
+      "esModuleInterop": true,                    
+  
+      "skipLibCheck": true,                     
+      "forceConsistentCasingInFileNames": true,
+      "newLine": "lf"
+    },
+    "tsdocsOptions": {
+      "entryPoints": ["./src/index.ts"],
+      "name": "objvl",
+      "changelog": true
+    },
+  }

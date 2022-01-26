@@ -1,0 +1,29 @@
+{
+  "name": "objvl",
+  "version": "0.0.1",
+  "description": "A fast object validator",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GoogleFeud/objvl.git"
+  },
+  "keywords": [
+    "schema",
+    "validation"
+  ],
+  "author": "GoogleFeud",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GoogleFeud/objvl/issues"
+  },
+  "homepage": "https://github.com/GoogleFeud/objvl#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.10.1",
+    "@typescript-eslint/parser": "^5.10.1",
+    "eslint": "^8.7.0",
+    "typescript": "^4.5.5"
+  }
+}
