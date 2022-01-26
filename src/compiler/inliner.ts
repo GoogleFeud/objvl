@@ -15,6 +15,8 @@ export function inlineFunc(fn: string|Function, replacements: Array<string>) : s
     let current = "";
     // If the parser is currently in a string
     let inStr = false;
+    // If the parser is currently in a template literal
+    let inTempLiteral = false;
     // The state the parser is in - whether it's reading parameters or the expresion itself
     let state = ParseState.Params;
     // The function params
@@ -33,14 +35,23 @@ export function inlineFunc(fn: string|Function, replacements: Array<string>) : s
             continue;
         }
 
-        // Cancel the optimization if the function has multiple expressions
-        if (isPrevArrow && char === "{") return `(${fn})(${replacements.join(",")})`;
+        if (char === "{") {
+            if (inTempLiteral && fn[i - 1] === "$") inStr = false;
+            else return `(${fn})(${replacements.join(",")})`;
+        }
+
+        if (char === "}" && inTempLiteral && !inStr) inStr = true;
 
         // Toggle string mode
-        if (char === "\"" || char === "'" || char === "`") inStr = !inStr;
+        if (char === "\"" || char === "'") inStr = !inStr;
+
+        if (char === "`") {
+            inStr = !inStr;
+            inTempLiteral = inStr;
+        }
 
         // If the current character is valid in an identifier, add it to the current identifier
-        if (/[a-zA-Z0-9_]/.test(char) && !inStr) {
+        if (/[a-zA-Z0-9_]/.test(char) && (!inStr)) {
             current += char;
             continue;
         }

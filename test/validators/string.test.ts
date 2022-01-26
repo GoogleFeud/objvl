@@ -55,9 +55,7 @@ test("maxLen", () => {
         },
         errors: {}
     });
-
-    console.log(validator.toString());
-
+    
     const [, errors] = validator({
         name: "abc"
     });

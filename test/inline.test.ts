@@ -18,3 +18,8 @@ test("Failed inlining", () => {
 test("Zero param inlining", () => {
     expect(inlineFunc(() => 505, [])).toBe("505");
 });
+
+test("Simple template literals", () => {
+    expect(inlineFunc((a: unknown, b: unknown) => `${a} + ${b}`, ["c", "d"])).toBe("`${c} + ${d}`");
+});
+
