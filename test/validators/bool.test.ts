@@ -9,7 +9,6 @@ test("required", () => {
                 type: (actual) => (actual === undefined || actual === null) ? "Active must be provided." : "Active must be a boolean."
             }}
         },
-        required: ["active"],
     });
 
     const [, errors] = validator({});

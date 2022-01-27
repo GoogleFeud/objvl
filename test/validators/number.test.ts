@@ -8,7 +8,6 @@ test("required", () => {
                 type: (actual) => (actual === undefined || actual === null) ? "Received an empty age." : "Age must be a number."
             }}
         },
-        required: ["age"],
     });
 
     const [, errors] = validator({
@@ -29,7 +28,7 @@ test("required", () => {
 test("min", () => {
     const validator = Objvl.compile({
         properties: {
-            age: { type: "number", min: 13, errors: {
+            age: { type: "number", min: 13, optional: true, errors: {
                 min: (val, min) => `Minimum age is ${min}`
             }}
         },
@@ -53,7 +52,7 @@ test("min", () => {
 test("max", () => {
     const validator = Objvl.compile({
         properties: {
-            age: { type: "number", max: 99, errors: {
+            age: { type: "number", max: 99, optional: true, errors: {
                 max: (val, max) => `Maximum age is ${max}`
             }},
             someNum: { type: "integer", max: 100, errors: {
@@ -61,7 +60,6 @@ test("max", () => {
                 type: () => "someNum must be an integer."
             }}
         },
-        required: ["someNum"]
     });
 
     const [, errors] = validator({

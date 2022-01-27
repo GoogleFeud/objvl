@@ -37,7 +37,8 @@ const resultAjv = ajv.compile({
     type: "object",
     properties: {
         name: { type: "string", minLength: 15 },
-        value: { type: "string", maxLength: 33, minLength: 15 } 
+        age: { type: "integer", minimum: 13, maximum: 99 },
+        hobbies: { type: "array", contains: { type: "string", minLength: 5 } }
     }
 });
 
@@ -46,10 +47,17 @@ const resultObjvl = Objvl.compile({
         name: { type: "string", maxLen: 15, errors: {
             maxLen: () => { return "String length exceeded." }
         }},
-        value: { type: "string", maxLen: 33, minLen: 15, errors: {
-            maxLen: (val, max) => `String length exceeded. Max string length is ${max}`,
-            minLen: (val, min) => `String length must be at least ${min} chars.`
-        }}
+        age: { type: "integer", min: 13, max: 99, errors: {
+            max: (val, max) => `Age exceeded. Max age is ${max}`,
+            min: (val, min) => `Age must be bigger than ${min}.`
+        }},
+        hobbies: { 
+            type: "array",
+            items: { type: "string", minLen: 5, errors: {} },
+            errors: {
+                minLen: (val, min) => `Hobbies must contain more than ${min} characters.`
+            }
+        }
     }
 });
 
@@ -60,13 +68,15 @@ b.suite("Validation",
     b.add("Objvl", () => {
         const res = resultObjvl({
             name: "abcccccccccccccccccccccccccccccccccccc",
-            value: "1234567891011121314"
+            value: "1234567891011121314",
+            hobbies: ["developer", "dev", "video games", "books", "watching movies", "idk"]
         });
     }),
     b.add("Ajv", () => {
         const res = resultAjv({
             name: "abcccccccccccccccccccccccccccccccccccc",
-            value: "1234567891011121314"
+            value: "1234567891011121314",
+            hobbies: ["developer", "dev", "video games", "books", "watching movies", "idk"]
         });
     }),
     b.cycle(),

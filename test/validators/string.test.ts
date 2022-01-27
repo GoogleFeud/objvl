@@ -7,8 +7,7 @@ test("required", () => {
             name: { type: "string", errors: {
                 type: (actual) => (actual === undefined || actual === null) ? "Received an empty name." : "Name must be a string."
             }}
-        },
-        required: ["name"],
+        }
     });
 
     const [, errors] = validator({
@@ -47,7 +46,7 @@ test("minLen", () => {
 test("maxLen", () => {
     const validator = Objvl.compile({
         properties: {
-            name: { type: "string", maxLen: 5, errors: {
+            name: { type: "string", maxLen: 5, optional: true, errors: {
                 maxLen: (text, minLen) => `Invalid maxLen. ${minLen}`
             }}
         },
