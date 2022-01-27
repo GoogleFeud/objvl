@@ -20,6 +20,7 @@
     "tsdocsOptions": {
       "entryPoints": ["./src/index.ts"],
       "name": "objvl",
+      "customPages": "./docs",
       "changelog": true
     },
     "exclude": ["./node_modules", "./test", "./dist", "./benchmarks"]

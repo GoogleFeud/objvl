@@ -8,7 +8,9 @@
     "build": "tsc",
     "bench": "tsc && node benchmarks/index.js",
     "bench_raw": "tsc && node benchmarks/raw.js",
-    "run": "tsc && jest"
+    "run": "tsc && jest",
+    "docs": "npx ts-docs",
+    "prepublishOnly": "tsc"
   },
   "repository": {
     "type": "git",
@@ -25,6 +27,8 @@
   },
   "homepage": "https://github.com/GoogleFeud/objvl#readme",
   "devDependencies": {
+    "@ts-docs/default-docs-structure": "^0.2.4",
+    "@ts-docs/ts-docs": "^0.2.4",
     "@types/jest": "^27.4.0",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",
