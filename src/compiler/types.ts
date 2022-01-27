@@ -16,7 +16,7 @@ export interface SchemaStringType {
     pattern?: RegExp,
     validator?: (value: string) => unknown,
     optional?: boolean,
-    errors: DefaultErrors & {
+    errors?: DefaultErrors & {
         minLen?: (value: string, min: number) => ValidationError,
         maxLen?: (value: string, max: number) => ValidationError,
         pattern?: (value: string) => ValidationError,
@@ -30,7 +30,7 @@ export interface SchemaNumberType {
     max?: number,
     validator?: (value: number) => unknown,
     optional?: boolean,
-    errors: DefaultErrors & {
+    errors?: DefaultErrors & {
         min?: (value: number, min: number) => ValidationError,
         max?: (value: number, max: number) => ValidationError,
         validator?: (value: string, validatorReturn: unknown) => ValidationError
@@ -44,7 +44,7 @@ export interface SchemaArrayType {
     items?: SchemaType | Array<SchemaType>,
     validator?: (value: Array<unknown>) => unknown,
     optional?: boolean,
-    errors: DefaultErrors & {
+    errors?: DefaultErrors & {
         minLen?: (value: Array<unknown>, min: number) => ValidationError,
         maxLen?: (value: Array<unknown>, max: number) => ValidationError,
         validator?: (value: Array<unknown>, validatorReturn: unknown) => ValidationError
@@ -54,7 +54,7 @@ export interface SchemaArrayType {
 export interface SchemaBoolType {
     type: "bool",
     optional?: boolean,
-    errors: DefaultErrors
+    errors?: DefaultErrors
 }
 
 export interface SchemaObjectType {
@@ -62,7 +62,7 @@ export interface SchemaObjectType {
     properties: Record<string, SchemaType>,
     validator?: (value: Record<string, unknown>) => unknown,
     optional?: boolean,
-    errors: DefaultErrors & {
+    errors?: DefaultErrors & {
         validator?: (value: Record<string, unknown>, validatorReturn: unknown) => ValidationError
     }
 }

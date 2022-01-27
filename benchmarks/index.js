@@ -38,8 +38,20 @@ const resultAjv = ajv.compile({
     properties: {
         name: { type: "string", minLength: 15 },
         age: { type: "integer", minimum: 13, maximum: 99 },
-        hobbies: { type: "array", contains: { type: "string", minLength: 5 } }
-    }
+        hobbies: { type: "array", contains: { type: "string", minLength: 5 } },
+        users: {
+            type: "array",
+            contains: {
+                type: "object",
+                properties: {
+                    name: { type: "string", minLength: 15 },
+                    age: { type: "integer", minimum: 13, maximum: 99 },
+                },
+                required: ["name", "age"]
+            }
+        }
+    },
+    required: ["name", "age","users"]
 });
 
 const resultObjvl = Objvl.compile({
@@ -53,9 +65,25 @@ const resultObjvl = Objvl.compile({
         }},
         hobbies: { 
             type: "array",
+            optional: true,
             items: { type: "string", minLen: 5, errors: {} },
             errors: {
                 minLen: (val, min) => `Hobbies must contain more than ${min} characters.`
+            }
+        },
+        users: {
+            type: "array",
+            items: {
+                type: "object",
+                properties: {
+                    name: { type: "string", maxLen: 15, errors: {
+                        maxLen: () => { return "String length exceeded." }
+                    }},
+                    age: { type: "integer", min: 13, max: 99, errors: {
+                        max: (val, max) => `Age exceeded. Max age is ${max}`,
+                        min: (val, min) => `Age must be bigger than ${min}.`
+                    }},
+                }
             }
         }
     }
@@ -68,15 +96,27 @@ b.suite("Validation",
     b.add("Objvl", () => {
         const res = resultObjvl({
             name: "abcccccccccccccccccccccccccccccccccccc",
-            value: "1234567891011121314",
-            hobbies: ["developer", "dev", "video games", "books", "watching movies", "idk"]
+            age: 314,
+            hobbies: ["developer", "dev", "video games", "books", "watching movies", "idk"],
+            users: [
+                { name: "Google", age: 44 },
+                { name: "B", age: 355 },
+                { name: "Ccwedw3ewe2e2e3eed3e3dde3e3s3d3d3", age: 43545 },
+                { name: "C", age: 44 }
+            ]   
         });
     }),
     b.add("Ajv", () => {
         const res = resultAjv({
             name: "abcccccccccccccccccccccccccccccccccccc",
-            value: "1234567891011121314",
-            hobbies: ["developer", "dev", "video games", "books", "watching movies", "idk"]
+            value: 314,
+            hobbies: ["developer", "dev", "video games", "books", "watching movies", "idk"],
+            users: [
+                { name: "Google", age: 44 },
+                { name: "B", age: 355 },
+                { name: "Ccwedw3ewe2e2e3eed3e3dde3e3s3d3d3", age: 43545 },
+                { name: "C", age: 44 }
+            ]
         });
     }),
     b.cycle(),
