@@ -58,11 +58,8 @@ export interface SchemaObjectType {
     type: "object"
     properties: Record<string, SchemaType>,
     required?: Array<string>,
-    allowExtra?: boolean,
     validator?: (value: Record<string, unknown>) => unknown,
     errors: DefaultErrors & {
-        required?: (value: number, min: number) => ValidationError,
-        allowExtra?: () => ValidationError,
         validator?: (value: Record<string, unknown>, validatorReturn: unknown) => ValidationError
     }
 }

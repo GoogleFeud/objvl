@@ -37,7 +37,7 @@ export function inlineFunc(fn: string|Function, replacements: Array<string>) : s
 
         if (char === "{") {
             if (inTempLiteral && fn[i - 1] === "$") inStr = false;
-            else return `(${fn})(${replacements.join(",")})`;
+            else if (isPrevArrow) return `(${fn})(${replacements.join(",")})`;
         }
 
         if (char === "}" && inTempLiteral && !inStr) inStr = true;

@@ -1,6 +1,6 @@
 
 import { inlineFunc } from "./inliner";
-import { Schema, SchemaNumberType, SchemaStringType, ValidationError } from "./types";
+import { Schema, SchemaBoolType, SchemaNumberType, SchemaStringType, ValidationError } from "./types";
 
 export interface ObjvlConfig {
     allErrors?: boolean
@@ -22,18 +22,30 @@ export class Objvl {
         let code = "err=[];temp=undefined;";
         for (const propertyName in schema.properties) {
             const prop = schema.properties[propertyName];
-            if (prop.type === "string") code += this.compileString("_", propertyName, schema, prop);
-            else if (prop.type === "bool") { void 0; }
-            else if (prop.type === "object") { void 0; }
-            else if (prop.type === "array") {void 0; } 
-            else code += this.compileNumber("_", propertyName, schema, prop);
+            switch (prop.type) {
+            case "string":
+                code += this.compileString("_", propertyName, schema, prop);
+                break;
+            case "bool":
+                code += this.compileBool("_", propertyName, schema, prop);
+                break;
+            case "object":
+                void 0;
+                break;
+            case "array":
+                void 0;
+                break;
+            default:
+                code += this.compileNumber("_", propertyName, schema, prop);
+                break;
+            }
         }
         code += "return [_, err];";
         return new Function("_", code) as ValidatorFn<T>;
     }
 
     private static compileString(obj: string, name: string, parent: Schema, str: SchemaStringType) : string {
-        const value = `${obj}.${name}`;
+        const value = `${obj}["${name}"]`;
         let output = "";
         const isOptional = !parent.required?.includes(name);
         if (isOptional) output += `if ("${name}" in _) {`;
@@ -47,7 +59,7 @@ export class Objvl {
     }
 
     private static compileNumber(obj: string, name: string, parent: Schema, num: SchemaNumberType) : string {
-        const value = `${obj}.${name}`;
+        const value = `${obj}["${name}"]`;
         let output = "";
         const isOptional = !parent.required?.includes(name);
         if (isOptional) output += `if ("${name}" in _) {`;
@@ -60,5 +72,16 @@ export class Objvl {
         if (isOptional) output += "};";
         return output;
     }
+
+    private static compileBool(obj: string, name: string, parent: Schema, bool: SchemaBoolType) : string {
+        const value = `${obj}["${name}"]`;
+        let output = "";
+        const isOptional = !parent.required?.includes(name);
+        if (isOptional) output += `if ("${name}" in _) {`;
+        output += `if (typeof ${value} !== "boolean") err.push(${bool.errors.type ? inlineFunc(bool.errors.type, [value]) : "0"});`;
+        if (isOptional) output += "};";
+        return output;
+    }
+
 
 }

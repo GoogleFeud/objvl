@@ -4,7 +4,7 @@
   "description": "A fast object validator",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest",
+    "test": "tsc && jest",
     "build": "tsc",
     "bench": "tsc && node benchmarks/index.js",
     "bench_raw": "tsc && node benchmarks/raw.js",

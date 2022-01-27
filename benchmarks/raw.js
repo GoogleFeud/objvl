@@ -37,7 +37,7 @@ const resultObjvl = Objvl.compile({
 resultObjvl({});
 
 const before1 = performance.now();
-for (let i=0; i < 10000; i++) {
+for (let i=0; i < 100000; i++) {
     resultObjvl({
         name: "Google",
         value: "abc",
@@ -47,7 +47,7 @@ for (let i=0; i < 10000; i++) {
 console.log(`OBJVL: ${performance.now() - before1} ms.`);
 
 const before = performance.now();
-for (let i=0; i < 10000; i++) {
+for (let i=0; i < 100000; i++) {
     resultAjv({
         name: "Google",
         value: "abc",
