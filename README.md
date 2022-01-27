@@ -4,11 +4,14 @@
 
 `objvl` does **not** implement JSON schema validation, so if you're specifically looking for a validator which validates JSON Schema, I recommend using [ajv](https://ajv.js.org/). If you just want to validate an object, whether it's coming from a HTTP request or somewhere else, `objvl` is the right tool for the job!
 
+Check out the guide [here](https://googlefeud.github.io/objvl/pages/Guides/Welcome.html)!
+
 ## Example
 
 ```ts
 import { Builders } from "objvl";
 
+// The builder pattern is optional
 const validator = Builders.schema({
     name: Builders.string()
         .max(52)
@@ -41,6 +44,7 @@ const [obj, errors] = validator({
 
 ### Compilation
 
+<img> </img>
 ![Compilation](https://github.com/GoogleFeud/objvl/blob/main/benchmarks/results/compilation.png?raw=true)
 
 ### Validation

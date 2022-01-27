@@ -6,8 +6,8 @@
   "scripts": {
     "test": "tsc && jest",
     "build": "tsc",
-    "bench": "tsc && node benchmarks/index.js",
-    "bench_raw": "tsc && node benchmarks/raw.js",
+    "bench": "tsc && node benchmark/index.js",
+    "bench_raw": "tsc && node benchmark/raw.js",
     "run": "tsc && jest",
     "docs": "npx ts-docs",
     "prepublishOnly": "tsc"
