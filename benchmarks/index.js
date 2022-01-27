@@ -32,7 +32,7 @@ b.suite("Compilation",
     b.complete()
 )
 
-const ajv = new Ajv();
+const ajv = new Ajv({allErrors: true});
 const resultAjv = ajv.compile({
     type: "object",
     properties: {
@@ -47,11 +47,14 @@ const resultObjvl = Objvl.compile({
             maxLen: () => { return "String length exceeded." }
         }},
         value: { type: "string", maxLen: 33, minLen: 15, errors: {
-            maxLen: () => { return "String length exceeded." },
-            minLen: () => { return "String length must be at least 15 chars." }
+            maxLen: (val, max) => `String length exceeded. Max string length is ${max}`,
+            minLen: (val, min) => `String length must be at least ${min} chars.`
         }}
     }
 });
+
+console.log(resultObjvl.toString());
+console.log(resultAjv.toString());
 
 b.suite("Validation",
     b.add("Objvl", () => {

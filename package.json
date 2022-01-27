@@ -7,6 +7,7 @@
     "test": "jest",
     "build": "tsc",
     "bench": "tsc && node benchmarks/index.js",
+    "bench_raw": "tsc && node benchmarks/raw.js",
     "run": "tsc && jest"
   },
   "repository": {

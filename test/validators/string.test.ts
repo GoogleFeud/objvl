@@ -1,7 +1,7 @@
 
 import { Objvl } from "../../dist/compiler/index";
 
-test("Required", () => {
+test("required", () => {
     const validator = Objvl.compile({
         properties: {
             name: { type: "string", errors: {
@@ -9,7 +9,6 @@ test("Required", () => {
             }}
         },
         required: ["name"],
-        errors: {}
     });
 
     const [, errors] = validator({
@@ -30,7 +29,6 @@ test("minLen", () => {
                 minLen: (text, minLen) => `Invalid minLen. ${minLen}`
             }}
         },
-        errors: {}
     });
 
     const [, errors] = validator({
@@ -53,7 +51,6 @@ test("maxLen", () => {
                 maxLen: (text, minLen) => `Invalid maxLen. ${minLen}`
             }}
         },
-        errors: {}
     });
     
     const [, errors] = validator({
@@ -71,4 +68,40 @@ test("maxLen", () => {
     const [, errors3] = validator({});
 
     expect(errors3[0]).toBe(undefined);
+});
+
+test("validator", () => {
+    const validator = Objvl.compile({
+        properties: {
+            name: { type: "string", validator: (value) => value.startsWith("obj") ? 1 : false, errors: {
+                validator: (val, rtrn) => rtrn as number
+            }}
+        },
+    });
+
+    const [, errors] = validator({
+        name: "object"
+    });
+
+    expect(errors[0]).toBe(1);
+});
+
+test("multiple errors", () => {
+    const validator = Objvl.compile({
+        properties: {
+            name: { type: "string", validator: (value) => value.startsWith("obj") ? 1 : false, errors: {
+                validator: (val, rtrn) => rtrn as number
+            }},
+            name2: { type: "string", minLen: 1000, errors: {
+                minLen: () => "Min length error."
+            } }
+        }
+    });
+
+    const [, errors] = validator({
+        name: "obj",
+        name2: "abc"
+    });
+
+    expect(errors.length).toBe(2);
 });
