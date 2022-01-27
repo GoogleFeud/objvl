@@ -45,9 +45,9 @@ const [obj, errors] = validator({
 ### Compilation
 
 <img> </img>
-![Compilation](https://github.com/GoogleFeud/objvl/blob/main/benchmarks/results/compilation.png?raw=true)
+![Compilation](https://github.com/GoogleFeud/objvl/blob/main/benchmark/results/compilation.png?raw=true)
 
 ### Validation
 
-![Validation](https://github.com/GoogleFeud/objvl/blob/main/benchmarks/results/validation.png?raw=true)
+![Validation](https://github.com/GoogleFeud/objvl/blob/main/benchmark/results/validation.png?raw=true)
 
