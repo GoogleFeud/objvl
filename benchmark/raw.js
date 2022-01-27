@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 const Ajv = require("ajv");
-const { Objvl } = require("../dist/compiler");
+const { compile } = require("../dist/compiler");
 const { performance } = require("perf_hooks");
 
 const ajv = new Ajv({allErrors: true});
@@ -17,7 +17,7 @@ const resultAjv = ajv.compile({
 // Warmup
 resultAjv({});
 
-const resultObjvl = Objvl.compile({
+const resultObjvl = compile({
     properties: {
         name: { type: "string", maxLen: 15, errors: {
             maxLen: () => { return "String length exceeded." }

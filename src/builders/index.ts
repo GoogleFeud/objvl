@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { ValidatorFn, Objvl } from "../index";
+import { ValidatorFn, compile } from "../index";
 import { SchemaArrayType, SchemaBoolType, SchemaNumberType, SchemaObjectType, SchemaStringType, SchemaType, ValidationError } from "../compiler/types";
 
 export function schema<T>(props: Record<string, AnyBuilder>, ...args: Array<string>) : ValidatorFn<T> {
@@ -8,7 +8,7 @@ export function schema<T>(props: Record<string, AnyBuilder>, ...args: Array<stri
     for (const propertyName in props) {
         properties[propertyName] = props[propertyName].finish();
     }
-    return Objvl.compile<T>({properties}, ...args);
+    return compile<T>({properties}, ...args);
 }
 
 export function string() : StringBuilder {

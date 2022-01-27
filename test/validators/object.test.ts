@@ -1,8 +1,8 @@
 
-import { Objvl } from "../../dist/compiler/index";
+import { compile } from "../../dist/compiler/index";
 
 test("properties", () => {
-    const validator = Objvl.compile({
+    const validator = compile({
         properties: {
             user: {
                 type: "object",

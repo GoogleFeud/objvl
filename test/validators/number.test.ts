@@ -1,8 +1,8 @@
 
-import { Objvl } from "../../dist/compiler/index";
+import { compile } from "../../dist/compiler/index";
 
 test("required", () => {
-    const validator = Objvl.compile({
+    const validator = compile({
         properties: {
             age: { type: "number", errors: {
                 type: (actual) => (actual === undefined || actual === null) ? "Received an empty age." : "Age must be a number."
@@ -26,7 +26,7 @@ test("required", () => {
 });
 
 test("min", () => {
-    const validator = Objvl.compile({
+    const validator = compile({
         properties: {
             age: { type: "number", min: 13, optional: true, errors: {
                 min: (val, min) => `Minimum age is ${min}`
@@ -50,7 +50,7 @@ test("min", () => {
 });
 
 test("max", () => {
-    const validator = Objvl.compile({
+    const validator = compile({
         properties: {
             age: { type: "number", max: 99, optional: true, errors: {
                 max: (val, max) => `Maximum age is ${max}`

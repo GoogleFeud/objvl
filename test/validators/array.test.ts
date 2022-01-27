@@ -1,8 +1,8 @@
 
-import { Objvl } from "../../dist/compiler/index";
+import { compile } from "../../dist/compiler/index";
 
 test("minLen", () => {
-    const validator = Objvl.compile({
+    const validator = compile({
         properties: {
             members: { type: "array", minLen: 5, errors: {
                 minLen: (val, min) => `Members array needs at least ${min} elements`
@@ -18,7 +18,7 @@ test("minLen", () => {
 });
 
 test("maxLen", () => {
-    const validator = Objvl.compile({
+    const validator = compile({
         properties: {
             members: { type: "array", maxLen: 5, optional: true, errors: {
                 type: () => "Members needs to be an array",
@@ -38,7 +38,7 @@ test("maxLen", () => {
 });
 
 test("items (all)", () => {
-    const validator = Objvl.compile({
+    const validator = compile({
         properties: {
             members: { type: "array", maxLen: 10, items: { 
                 type: "integer", 
@@ -64,7 +64,7 @@ test("items (all)", () => {
 });
 
 test("items (tuple)", () => {
-    const validator = Objvl.compile({
+    const validator = compile({
         properties: {
             members: { type: "array", items: [
                 { type: "string", maxLen: 10, errors: {
@@ -93,7 +93,7 @@ test("items (tuple)", () => {
 });
 
 test("optional tuple items", () => {
-    const validator = Objvl.compile({
+    const validator = compile({
         properties: {
             members: { type: "array", items: [
                 { type: "string", maxLen: 10, errors: {

@@ -39,15 +39,9 @@ const [obj, errors] = validator({
 
 ## Benchmarks
 
-**Ajv version used: 8.9.0**
+**Ajv version used: 8.9.0**     
 **Joi version used: 17.6.0**
 
-### Compilation
-
-<img> </img>
 ![Compilation](https://github.com/GoogleFeud/objvl/blob/main/benchmark/results/compilation.png?raw=true)
-
-### Validation
-
 ![Validation](https://github.com/GoogleFeud/objvl/blob/main/benchmark/results/validation.png?raw=true)
 

@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 const Ajv = require("ajv");
-const { Objvl } = require("../dist/compiler");
+const { compile } = require("../dist/compiler");
 const Joi = require("joi");
 const b = require("benny");
 
@@ -17,7 +17,7 @@ b.suite("Compilation",
         });
     }),
     b.add("Objvl", () => {
-        const result = Objvl.compile({
+        const result = compile({
             properties: {
                 name: { type: "string", maxLen: 15, errors: {
                     maxLen: () => "String length exceeded."
@@ -56,7 +56,7 @@ const resultAjv = ajv.compile({
     required: ["name", "age","users"]
 });
 
-const resultObjvl = Objvl.compile({
+const resultObjvl = compile({
     properties: {
         name: { type: "string", maxLen: 15, errors: {
             maxLen: () => { return "String length exceeded." }

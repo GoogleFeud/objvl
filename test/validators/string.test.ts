@@ -1,8 +1,8 @@
 
-import { Objvl } from "../../dist/compiler/index";
+import { compile } from "../../dist/compiler/index";
 
 test("required", () => {
-    const validator = Objvl.compile({
+    const validator = compile({
         properties: {
             name: { type: "string", errors: {
                 type: (actual) => (actual === undefined || actual === null) ? "Received an empty name." : "Name must be a string."
@@ -22,7 +22,7 @@ test("required", () => {
 });
 
 test("minLen", () => {
-    const validator = Objvl.compile({
+    const validator = compile({
         properties: {
             name: { type: "string", minLen: 10, errors: {
                 minLen: (text, minLen) => `Invalid minLen. ${minLen}`
@@ -44,7 +44,7 @@ test("minLen", () => {
 });
 
 test("maxLen", () => {
-    const validator = Objvl.compile({
+    const validator = compile({
         properties: {
             name: { type: "string", maxLen: 5, optional: true, errors: {
                 maxLen: (text, minLen) => `Invalid maxLen. ${minLen}`
@@ -70,7 +70,7 @@ test("maxLen", () => {
 });
 
 test("validator", () => {
-    const validator = Objvl.compile({
+    const validator = compile({
         properties: {
             name: { type: "string", validator: (value) => value.startsWith("obj") ? 1 : false, errors: {
                 validator: (val, rtrn) => rtrn as number
@@ -86,7 +86,7 @@ test("validator", () => {
 });
 
 test("multiple errors", () => {
-    const validator = Objvl.compile({
+    const validator = compile({
         properties: {
             name: { type: "string", validator: (value) => value.startsWith("obj") ? 1 : false, errors: {
                 validator: (val, rtrn) => rtrn as number

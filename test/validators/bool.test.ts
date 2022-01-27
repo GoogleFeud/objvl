@@ -1,9 +1,9 @@
 
 
-import { Objvl } from "../../dist/compiler/index";
+import { compile } from "../../dist/compiler/index";
 
 test("required", () => {
-    const validator = Objvl.compile({
+    const validator = compile({
         properties: {
             active: { type: "bool", errors: {
                 type: (actual) => (actual === undefined || actual === null) ? "Active must be provided." : "Active must be a boolean."
