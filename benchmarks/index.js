@@ -30,7 +30,8 @@ b.suite("Compilation",
         });
     }),
     b.cycle(),
-    b.complete()
+    b.complete(),
+    b.save({ file: 'compilation', format: 'chart.html' })
 )
 
 const ajv = new Ajv({allErrors: true});
@@ -144,5 +145,6 @@ b.suite("Validation",
         })
     }),
     b.cycle(),
-    b.complete()
+    b.complete(),
+    b.save({ file: 'validation', format: 'chart.html' })
 )
