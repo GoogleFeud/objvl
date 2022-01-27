@@ -17,8 +17,6 @@ test("properties", () => {
         },
     });
 
-    console.log(validator.toString());
-
     const [, errors] = validator({ user: { name: "Google", age: 18 } });
     expect(errors.length).toBe(0);
 

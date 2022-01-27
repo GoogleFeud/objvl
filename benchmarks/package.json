@@ -12,5 +12,8 @@
   "devDependencies": {
     "ajv": "^8.9.0",
     "benny": "^3.7.1"
+  },
+  "dependencies": {
+    "joi": "^17.6.0"
   }
 }

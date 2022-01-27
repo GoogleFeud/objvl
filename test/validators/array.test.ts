@@ -14,7 +14,7 @@ test("minLen", () => {
     expect(errors[0]).toBe("Members array needs at least 5 elements");
 
     const [, errors2] = validator({});
-    expect(errors2[0]).toBe(0);
+    expect(errors2.length).toBe(1);
 });
 
 test("maxLen", () => {

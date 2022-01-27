@@ -7,7 +7,7 @@ export interface ObjvlConfig {
 }
 
 export interface ValidatorFn<T> {
-    (data: unknown) : [value: T, errors: Array<ValidationError>],
+    (data: unknown, ...args: Array<unknown>) : [value: T, errors: Array<ValidationError>],
 }
 
 type CompilePropName = string | number | { direct: string };
@@ -20,13 +20,13 @@ export class Objvl {
         this.config = config;
     }
 
-    static compile<T>(schema: Schema) : ValidatorFn<T> {
+    static compile<T>(schema: Schema, ...args: Array<string>) : ValidatorFn<T> {
         let code = "let err=[],temp,len;";
         for (const propertyName in schema.properties) {
             code += this.compileType("_", propertyName, schema.properties[propertyName]);
         }
         code += "return [_, err];";
-        return new Function("_", code) as ValidatorFn<T>;
+        return new Function("_", ...args, code) as ValidatorFn<T>;
     }
 
     private static compileType(obj: string, name: CompilePropName, prop: SchemaType) : string {
@@ -86,7 +86,7 @@ export class Objvl {
         if (arr.optional) output += `if("${name}" in _){`;
         output += `if(typeof ${value} !== "object" || !Array.isArray(${value})) err.push(${arr.errors?.type ? inlineFunc(arr.errors.type, [value]) : `"Property '${this.normalizeValue(value)}' must be an array."`});`;
         if (arr.minLen !== undefined) output += `else if(${value}.length < ${arr.minLen}) err.push(${arr.errors?.minLen ? inlineFunc(arr.errors.minLen, [value, arr.minLen.toString()]) : `"Property '${this.normalizeValue(value)}' must have at least ${arr.minLen} elements."`});`;
-        if (arr.maxLen !== undefined) output += `else if(${value}.length > ${arr.maxLen}) err.push(${arr.errors?.maxLen ? inlineFunc(arr.errors.maxLen, [value, arr.maxLen.toString()]) : `"Property '${this.normalizeValue(value)}' cannot have more than ${arr.maxLen} elements."`}});`;
+        if (arr.maxLen !== undefined) output += `else if(${value}.length > ${arr.maxLen}) err.push(${arr.errors?.maxLen ? inlineFunc(arr.errors.maxLen, [value, arr.maxLen.toString()]) : `"Property '${this.normalizeValue(value)}' cannot have more than ${arr.maxLen} elements."`});`;
         if (arr.validator) output += `else if(temp=${inlineFunc(arr.validator, [value])}) err.push(${arr.errors?.validator ? inlineFunc(arr.errors.validator, [value, "temp"]) : `"Property '${this.normalizeValue(value)}': custom validator error."`});`;
         if (arr.items) {
             output += "else{";

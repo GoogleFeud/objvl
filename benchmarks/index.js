@@ -2,6 +2,7 @@
 
 const Ajv = require("ajv");
 const { Objvl } = require("../dist/compiler");
+const Joi = require("joi");
 const b = require("benny");
 
 b.suite("Compilation",
@@ -89,6 +90,16 @@ const resultObjvl = Objvl.compile({
     }
 });
 
+const joi = Joi.object({
+    name: Joi.string().max(15),
+    age: Joi.number().integer().min(13).max(99),
+    hobbies: Joi.array().items(Joi.string().min(5)),
+    users: Joi.array().items(Joi.object({
+        name: Joi.string().max(15),
+        age: Joi.number().integer().min(13).max(99)
+    }))
+});
+
 console.log(resultObjvl.toString());
 console.log(resultAjv.toString());
 
@@ -118,6 +129,19 @@ b.suite("Validation",
                 { name: "C", age: 44 }
             ]
         });
+    }),
+    b.add("Joi", () => {
+        const res = joi.validate({
+            name: "abcccccccccccccccccccccccccccccccccccc",
+            value: 314,
+            hobbies: ["developer", "dev", "video games", "books", "watching movies", "idk"],
+            users: [
+                { name: "Google", age: 44 },
+                { name: "B", age: 355 },
+                { name: "Ccwedw3ewe2e2e3eed3e3dde3e3s3d3d3", age: 43545 },
+                { name: "C", age: 44 }
+            ]
+        })
     }),
     b.cycle(),
     b.complete()
