@@ -27,8 +27,8 @@
   },
   "homepage": "https://github.com/GoogleFeud/objvl#readme",
   "devDependencies": {
-    "@ts-docs/default-docs-structure": "^0.2.4",
-    "@ts-docs/ts-docs": "^0.2.4",
+    "@ts-docs/default-docs-structure": "^0.2.5",
+    "@ts-docs/ts-docs": "^0.2.5",
     "@types/jest": "^27.4.0",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",
