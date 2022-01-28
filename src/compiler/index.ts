@@ -11,22 +11,23 @@ type CompilePropName = string | number | { direct: string };
 /**
  * Creates a very fast validation function from the provided object. The values for the argument names get passed when calling the function.
  * 
+ * @param schema The object to make a validator for.
+ * @param args Custom argument names that the validation function will be able to access.
+ * 
  * @example
+ * 
  * ```js
  * const validator = compile({
  *    value: { type: "number", errors: {
- *         type: () => someExternalFn()
+ *         type: "() => someExternalFn()"
  *  }}
  * }, "someExternalFn")
  * 
  * validator({...}, () => console.log("I'm getting called inside the validator!"));
  * ```
- * 
- * @param schema The object to make a validator for
- * @param args Custom argument names that the validation function will be able to access.
  */
 export function compile<T>(schema: Schema, ...args: Array<string>) : ValidatorFn<T> {
-    let code = "let err=[],temp,len;";
+    let code = "let err=[],temp,___len;";
     for (const propertyName in schema.properties) {
         code += compileType("_", propertyName, schema.properties[propertyName]);
     }
@@ -73,7 +74,7 @@ function compileNumber(obj: string, name: CompilePropName, num: SchemaNumberType
 
     if (num.max !== undefined) output += `else if(${value} > ${num.max}) err.push(${num.errors?.max ? inlineFunc(num.errors.max, [value, num.max.toString(), `"${extractedPath}"`]) : `"Property '${extractedPath}' must be > ${num.max}"`});`;
     if (num.min !== undefined) output += `else if(${value} < ${num.min}) err.push(${num.errors?.min ? inlineFunc(num.errors.min, [value, num.min.toString(), `"${extractedPath}"`]) : `"Property '${extractedPath}' must be < ${num.min}"`});`;
-    if (num.validator) output += `elseif (temp=${inlineFunc(num.validator, [value])}) err.push(${num.errors?.validator ? inlineFunc(num.errors.validator, [value, "temp", `"${extractedPath}"`]) : `"Property '${extractedPath}': custom validator error."`});`;
+    if (num.validator) output += `else if(temp=${inlineFunc(num.validator, [value])}) err.push(${num.errors?.validator ? inlineFunc(num.errors.validator, [value, "temp", `"${extractedPath}"`]) : `"Property '${extractedPath}': custom validator error."`});`;
     if (num.optional) output += "};";
     return output;
 }
@@ -104,8 +105,8 @@ function compileArray(obj: string, name: CompilePropName, arr: SchemaArrayType) 
                 output += compileType(value, i, arr.items[i]);
             }
         } else {
-            output += `len=${value}.length;temp=err.length;while(len--){`;
-            output += compileType(value, { direct: "len" }, arr.items);
+            output += `___len=${value}.length;temp=err.length;while(___len--){`;
+            output += compileType(value, { direct: "___len" }, arr.items);
             output += "if(err.length > temp) break;";
             output += "};";
         }
@@ -136,5 +137,5 @@ function buildProp(obj: string, name: CompilePropName) : string {
 }
 
 function extractPath(path: string) : string {
-    return path.slice(2, -1).replace(/]\[/g, "/").replace(/"/g, "");
+    return path.slice(2, -1).replace(/"|\[___len]/g, "").replace(/]\[/g, "/");
 }

@@ -6,7 +6,7 @@ export interface Schema {
 export type ValidationError<T = Record<string, unknown>> = number | T & { code: number } | string;
 
 export interface DefaultErrors {
-    type?: (actual: unknown, depth: Array<string>) => ValidationError
+    type?: ((actual: unknown, depth: Array<string>) => ValidationError) | string
 }
 
 export interface SchemaStringType {
@@ -14,13 +14,13 @@ export interface SchemaStringType {
     minLen?: number,
     maxLen?: number,
     pattern?: RegExp,
-    validator?: (value: string) => unknown,
+    validator?: ((value: string) => unknown) | string,
     optional?: boolean,
     errors?: DefaultErrors & {
-        minLen?: (value: string, min: number, depth: Array<string>) => ValidationError,
-        maxLen?: (value: string, max: number, depth: Array<string>) => ValidationError,
-        pattern?: (value: string, depth: Array<string>) => ValidationError,
-        validator?: (value: string, validatorReturn: unknown, depth: Array<string>) => ValidationError
+        minLen?: ((value: string, min: number, depth: Array<string>) => ValidationError) | string,
+        maxLen?: ((value: string, max: number, depth: Array<string>) => ValidationError) | string,
+        pattern?: ((value: string, depth: Array<string>) => ValidationError) | string,
+        validator?: ((value: string, validatorReturn: unknown, depth: Array<string>) => ValidationError) | string
     }
 }
 
@@ -28,12 +28,12 @@ export interface SchemaNumberType {
     type: "number" | "integer" | "float",
     min?: number,
     max?: number,
-    validator?: (value: number) => unknown,
+    validator?: ((value: number) => unknown) | string,
     optional?: boolean,
     errors?: DefaultErrors & {
-        min?: (value: number, min: number, depth: Array<string>) => ValidationError,
-        max?: (value: number, max: number, depth: Array<string>) => ValidationError,
-        validator?: (value: string, validatorReturn: unknown, depth: Array<string>) => ValidationError
+        min?: ((value: number, min: number, depth: Array<string>) => ValidationError) | string,
+        max?: ((value: number, max: number, depth: Array<string>) => ValidationError) | string,
+        validator?: ((value: string, validatorReturn: unknown, depth: Array<string>) => ValidationError) | string
     }
 }
 
@@ -42,12 +42,12 @@ export interface SchemaArrayType {
     minLen?: number,
     maxLen?: number,
     items?: SchemaType | Array<SchemaType>,
-    validator?: (value: Array<unknown>) => unknown,
+    validator?: ((value: Array<unknown>) => unknown) | string,
     optional?: boolean,
     errors?: DefaultErrors & {
-        minLen?: (value: Array<unknown>, min: number, depth: Array<string>) => ValidationError,
-        maxLen?: (value: Array<unknown>, max: number, depth: Array<string>) => ValidationError,
-        validator?: (value: Array<unknown>, validatorReturn: unknown, depth: Array<string>) => ValidationError
+        minLen?: ((value: Array<unknown>, min: number, depth: Array<string>) => ValidationError) | string,
+        maxLen?: ((value: Array<unknown>, max: number, depth: Array<string>) => ValidationError) | string,
+        validator?: ((value: Array<unknown>, validatorReturn: unknown, depth: Array<string>) => ValidationError) | string
     }
 }
 
@@ -60,10 +60,10 @@ export interface SchemaBoolType {
 export interface SchemaObjectType {
     type: "object"
     properties: Record<string, SchemaType>,
-    validator?: (value: Record<string, unknown>) => unknown,
+    validator?: ((value: Record<string, unknown>) => unknown) | string,
     optional?: boolean,
     errors?: DefaultErrors & {
-        validator?: (value: Record<string, unknown>, validatorReturn: unknown, depth: Array<string>) => ValidationError
+        validator?: ((value: Record<string, unknown>, validatorReturn: unknown, depth: Array<string>) => ValidationError) | string
     }
 }
 
