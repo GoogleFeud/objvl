@@ -71,6 +71,6 @@ const validateData = {
 }
 ```
 
-## Dynamic errors
+#### Dynamic errors
 
-Every error function's last argument is the **path** to that property. For example, for the object above, a valid error path would be `users/name`, `users`.
+Every error function's last argument is the **path** to that property. For example, for the object above, a valid error path would be `users/name`, `users`. You can use this string to determine what error to send, or you can directly include it in the error. 
