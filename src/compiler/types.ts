@@ -3,7 +3,7 @@ export interface Schema {
     properties: Record<string, SchemaType>
 }
 
-export type ValidationError<T = Record<string, unknown>> = number | T & { code: number } | string;
+export type ValidationError = number | { code: number } | string | unknown;
 
 export interface DefaultErrors {
     type?: ((actual: unknown, depth: string) => ValidationError) | string

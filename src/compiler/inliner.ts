@@ -51,7 +51,7 @@ export function inlineFunc(fn: string|Function, replacements: Array<string>) : s
         }
 
         // If the current character is valid in an identifier, add it to the current identifier
-        if (/[a-zA-Z0-9_]/.test(char) && (!inStr)) {
+        if (/[a-zA-Z0-9_$]/.test(char) && (!inStr)) {
             current += char;
             continue;
         }

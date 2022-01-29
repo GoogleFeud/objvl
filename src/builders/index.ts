@@ -57,12 +57,12 @@ class StringBuilder {
         return this;
     }
 
-    validator(validator: (val: string) => unknown) : this {
+    validator(validator: ((val: string) => unknown) | string) : this {
         this.inner.validator = validator;
         return this;
     }
 
-    err(kind: "maxLen" | "minLen" | "type" | "pattern" | "validator", value: (...els: Array<any>) => ValidationError) : this {
+    err(kind: "maxLen" | "minLen" | "type" | "pattern" | "validator", value: ((...els: Array<any>) => ValidationError) | string) : this {
         this.inner.errors![kind] = value;
         return this;
     }
@@ -103,12 +103,12 @@ class NumberBuilder {
         return this;
     }
 
-    validator(validator: (val: number) => unknown) : this {
+    validator(validator: ((val: number) => unknown) | string) : this {
         this.inner.validator = validator;
         return this;
     }
 
-    err(kind: "max" | "min" | "type" | "validator", value: (...els: Array<any>) => ValidationError) : this {
+    err(kind: "max" | "min" | "type" | "validator", value: ((...els: Array<any>) => ValidationError) | string) : this {
         this.inner.errors![kind] = value;
         return this;
     }
@@ -130,7 +130,7 @@ class BoolBuilder {
         return this;
     }
 
-    err(kind: "type", value: (val: unknown) => ValidationError) : this {
+    err(kind: "type", value: ((val: unknown) => ValidationError) | string) : this {
         this.inner.errors![kind] = value;
         return this;
     }
@@ -172,12 +172,12 @@ class ArrayBuilder {
         return this;
     }
 
-    validator(validator: (items: Array<unknown>) => unknown) : this {
+    validator(validator: ((items: Array<unknown>) => unknown) | string) : this {
         this.inner.validator = validator;
         return this;
     }
 
-    err(kind: "type" | "minLen" | "maxLen" | "validator", value: (...els: Array<any>) => ValidationError) : this {
+    err(kind: "type" | "minLen" | "maxLen" | "validator", value: ((...els: Array<any>) => ValidationError) | string) : this {
         this.inner.errors![kind] = value;
         return this;
     }
@@ -203,12 +203,12 @@ class ObjectBuilder {
         return this;
     }
 
-    validator(validator: (val: Record<string, unknown>) => unknown) : this {
+    validator(validator: ((val: Record<string, unknown>) => unknown) | string) : this {
         this.inner.validator = validator;
         return this;
     }
 
-    err(kind: "type" | "validator", value: (...els: Array<any>) => ValidationError) : this {
+    err(kind: "type" | "validator", value: ((...els: Array<any>) => ValidationError) | string) : this {
         this.inner.errors![kind] = value;
         return this;
     }
