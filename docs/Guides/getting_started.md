@@ -104,3 +104,43 @@ const validator = compile({
 This way you decide how the errors should look, so there's no overhead - objvl doesn't create error objects, from which you only need one piece of information. 
 
 |>[note] Objvl reduces error overhead by inlining arrow functions which have a single expression as their body!
+
+## Errors
+
+By default, objvl gives you all the errors it can get, one error per property. For example:
+
+```ts --Builders
+const validator = Builders.schema({
+    name: Builders.string()
+        .max(52)
+        .err("type", () => 1)
+        .err("maxLen", () => 2)
+    value: Builders.number()
+        .integer()
+        .err("type", () => 1)
+});
+
+console.log(validator({})[1]); // Logs [1, 1]
+```
+```ts --Objects
+const validator = compile({
+        properties: {
+        name: {
+            type: "string",
+            maxLen: 52,
+            errors: {
+                type: () => 1,
+                maxLen: () => 2
+            }
+        },
+        value: {
+            type: "integer",
+            errors: {
+                type: () => 1
+            }
+        }
+    }
+});
+
+console.log(validator({})[1]); // Logs [1, 1]
+```
