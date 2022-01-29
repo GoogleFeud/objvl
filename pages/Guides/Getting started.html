@@ -2,7 +2,7 @@
 <h2 id="install" class="section-header">Install</h2><pre><code class="hljs">npm i objvl</code></pre><h2 id="basic-schema" class="section-header">Basic schema</h2><p>A &quot;schema&quot; describes how the object should look. Every schema has a list of properties, and each of them has a <span><span class="c-tooltip"><a class="reference-link object" href="../../m.compiler/type/SchemaType.html">type</a><span class="c-tooltip-content"><span class="keyword">type </span><span class="item-name object">type</span><span style="display:block" class="monospace fw-bold">compiler/<span class="item-name object">SchemaType</span></span></span></span></span>. You can write schemas in two ways: the builder pattern, which is very similar to <strong>joi</strong>, or via objects, which is similar to <strong>ajv</strong>. </p>
 <p>The following code creates a function which makes sure an object you pass to it has:</p>
 <ul>
-<li>The property &quot;name&quot;, which must be a string, with maximum 52 characters in it</li>
+<li>The property &quot;name&quot;, which must be a string, with maximum 52 characters in it.</li>
 <li>The property &quot;age&quot;, which is an integer, with minimum value of 13.</li>
 </ul>
 <p>By default, both properties are <strong>required</strong>. You can make them optional by setting <code>optional</code> to true, and as you can see, we handle all the possible errors ourselves. <code>objvl</code> has default errors built in, but it&#39;s always a good practice to handle the errors yourself.</p>

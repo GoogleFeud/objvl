@@ -18,7 +18,7 @@ npm i objvl
 A "schema" describes how the object should look. Every schema has a list of properties, and each of them has a [[SchemaType as type]]. You can write schemas in two ways: the builder pattern, which is very similar to **joi**, or via objects, which is similar to **ajv**. 
 
 The following code creates a function which makes sure an object you pass to it has:
-- The property "name", which must be a string, with maximum 52 characters in it
+- The property "name", which must be a string, with maximum 52 characters in it.
 - The property "age", which is an integer, with minimum value of 13.
 
 By default, both properties are **required**. You can make them optional by setting `optional` to true, and as you can see, we handle all the possible errors ourselves. `objvl` has default errors built in, but it's always a good practice to handle the errors yourself.

@@ -7,7 +7,7 @@ order: 2
 
 ## `validator` property
 
-You can create completely custom validators using the `validator` property. If the provided function returns a falsey value, like `false`, `null`, `undefined`, `""` or `0`, then that means that the validator **pased**, and an error won't be returned. If it returns any other value, then it means there's an error, and the `validator` error function will be executed. The first parameter of the function will always be the value that got received, the second will be the value returned by the validator, and the third one is the path to the property.
+You can create completely custom validators using the `validator` property. If the provided function returns a falsey value, like `false`, `null`, `undefined`, `""` or `0`, then that means that the validator **pased**, and an error won't be returned. If it returns any other value, then it means there's an error, and the `validator` error function will be executed. The first parameter of the error function will always be the value that got received, the second will be the value returned by the validator, and the third one is the path to the property.
 
 ```ts --Builders
 const validator = Builder.schema({
