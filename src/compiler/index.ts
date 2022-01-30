@@ -58,7 +58,7 @@ function compileString(obj: string, name: CompilePropName, str: SchemaStringType
     output += `if (typeof ${value} !== "string") err.push(${str.errors?.type ? inlineFunc(str.errors.type, [value, `"${extractedPath}"`]) : `"Property '${extractedPath}' must be a string."`});`;
     if (str.maxLen !== undefined) output += `else if(${value}.length > ${str.maxLen}) err.push(${str.errors?.maxLen ? inlineFunc(str.errors.maxLen, [value, str.maxLen.toString(), `"${extractedPath}"`]) : `"Property '${extractedPath}' cannot exceed ${str.maxLen} characters."`});`;
     if (str.minLen !== undefined) output += `else if(${value}.length < ${str.minLen}) err.push(${str.errors?.minLen ? inlineFunc(str.errors.minLen, [value, str.minLen.toString(), `"${extractedPath}"`]) : `"Property '${extractedPath}' must be at least ${str.minLen} characters."`});`;
-    if (str.pattern) output += `else if(${str.pattern}.test(${value})) err.push(${str.errors?.pattern ? inlineFunc(str.errors.pattern, [value, `"${extractedPath}"`]) : `"Property '${extractedPath}}' does not match pattern '${str.pattern}'"`});`;
+    if (str.pattern) output += `else if(!${str.pattern}.test(${value})) err.push(${str.errors?.pattern ? inlineFunc(str.errors.pattern, [value, `"${extractedPath}"`]) : `"Property '${extractedPath}}' does not match pattern '${str.pattern}'"`});`;
     if (str.validator) output += `else if(temp=${inlineFunc(str.validator, [value])}) err.push(${str.errors?.validator ? inlineFunc(str.errors.validator, [value,  "temp", `"${extractedPath}"`]) : `"Property '${extractedPath}': custom validator error."`});`;
     if (str.optional) output += "};";
     return output;

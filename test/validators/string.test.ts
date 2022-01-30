@@ -104,3 +104,17 @@ test("multiple errors", () => {
 
     expect(errors.length).toBe(2);
 });
+
+test("pattern", () => {
+    const validator = compile({
+        properties: {
+            date: { type: "string", pattern: /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/, errors: {
+                pattern: () => "Invalid date."
+            }},
+        }
+    });
+
+    const [, errors] = validator({ date: "10203234"});
+
+    expect(errors[0]).toBe("Invalid date.");
+});
